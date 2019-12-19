@@ -1,0 +1,25 @@
+.btn {
+	color: #fff;
+	&:hover {
+		color: #fff;
+	}
+}
+.avatar {
+	vertical-align: middle;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	border: solid 1px rgb(212, 212, 212);
+}
+.media {
+	border-bottom: solid 1px #eee;
+	padding-bottom: 5px;
+	margin-bottom: 20px;
+}
+.spinner {
+	display: inline-block;
+	margin: 0px 20px;
+}
+.jumbotron {
+	margin-top: 20px;
+}
