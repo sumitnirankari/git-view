@@ -1,9 +1,9 @@
-.btn {
+/*.btn {
 	color: #fff;
 	&:hover {
 		color: #fff;
 	}
-}
+}*/
 .avatar {
 	vertical-align: middle;
 	width: 50px;
@@ -22,4 +22,17 @@
 }
 .jumbotron {
 	margin-top: 20px;
+}
+.list-wrapper {
+	label {
+		display: block;
+	}
+	.btn-group {
+		display: flex;
+		width: 100%;
+		.btn {
+			width: 100%;
+			text-align: left;
+		}
+	}
 }

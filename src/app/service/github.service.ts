@@ -19,4 +19,25 @@ export class GitHubService {
       `https://api.github.com/repos/${username}/${repo}/commits`
     );
   }
+  /**
+   *
+   * @param username GitHub usename.
+   * @param repo GitHub repository name.
+   */
+  getAllBranch(username: String, repo: String) {
+    return this.apiService.get(
+      `https://api.github.com/repos/${username}/${repo}/branches`
+    );
+  }
+  getCommitByBranchSha(username: String, repo: String, sha: String) {
+    return this.apiService.get(
+      `https://api.github.com/repos/${username}/${repo}/commits?sha=${sha}`
+    );
+  }
+  getProjectList(username: String) {
+    return this.apiService.get(
+      `https://api.github.com/users/${username}/repos`
+    );
+  }
+
 }

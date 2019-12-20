@@ -12,63 +12,77 @@
     </p>
     <form>
       <div class="form-row">
-        <div class="form-group col-md-6">
-          <input
-            type="text"
-            [(ngModel)]="username"
-            name="username"
-            class="form-control"
-            placeholder="User name"
-          />
+        <div class="form-group col-md-8">
+          <label for="">Enter your Github username</label>
+          <div class="form-row">
+            <input type="text" [(ngModel)]="username" name="username" class="form-control col-9"
+              placeholder="User name" />
+            <button type="button" class="btn btn-primary" (click)="getProjectList()">
+              Get All Project
+            </button>
+          </div>
         </div>
-        <div class="form-group col-md-6">
-          <input
-            type="text"
-            [(ngModel)]="repo"
-            name="repo"
-            class="form-control"
-            placeholder="Repository name"
-          />
+        <div class="form-group col-md-4">
+          <div *ngIf="showProjDropDown" class="list-wrapper">
+            <label for="">Choose your Project</label>
+            <div class="btn-group" dropdown>
+              <button id="button-animated" dropdownToggle type="button" class="btn btn-light dropdown-toggle"
+                aria-controls="dropdown-animated">
+                {{ repo }} <span class="caret"></span>
+              </button>
+              <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu"
+                aria-labelledby="button-animated">
+                <li role="menuitem" *ngFor="let proj of projectList;">
+                  <a class="dropdown-item" (click)="projectOnClick(proj.name)">{{proj.name}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
+
       <div class="form-row">
-        <a
-          class="btn btn-primary btn-lg"
-          (click)="getRepoCommit()"
-          role="button"
-          >Show commit</a
-        >
-        <div class="spinner" *ngIf="showSpinner">
-          <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
+        <div class="form-group col-md-12">
+          <div *ngIf="showBranchDropDown" class="list-wrapper">
+            <label for="">Select Branch</label>
+            <div class="btn-group" dropdown>
+              <button id="button-animated" dropdownToggle type="button" class="btn btn-light dropdown-toggle"
+                aria-controls="dropdown-animated">
+                {{branch}} <span class="caret"></span>
+              </button>
+              <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu" role="menu"
+                aria-labelledby="button-animated">
+                <li role="menuitem" *ngFor="let branch of branchList;">
+                  <a class="dropdown-item"
+                    (click)="getCommitByBranchSha(branch.commit.sha, branch.name)">{{branch.name}}</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </form>
   </div>
-
   <ul class="list-unstyled">
-    <li class="media" *ngFor="let commit of commitList; index as i">
-      <img
-        [src]="
+    <li class="media" *ngFor="let commit of branchCommit;">
+      <img [src]="
           commit.author ? commit.author.avatar_url : '../assets/default.png'
-        "
-        width="64px"
-        class="avatar mr-3"
-      />
+        " width="64px" class="avatar mr-3" />
       <div class="media-body">
         <h5 class="mt-0 mb-1">
           {{ commit.commit.message | slice: 0:80 }}
           {{ commit.commit.message.length > 80 ? "..." : "" }}
         </h5>
-        {{ commit.committer.login }} committed on
+        <a href="{{commit.html_url}}">{{ commit.html_url }}</a>
         {{ commit.commit.committer.date | date }}
       </div>
+
     </li>
-    <li class="media" *ngIf="!commitList.length">
+    <li class="media" *ngIf="!branchCommit.length">
       <div class="media-body">
         <h5 class="mt-0 mb-1">No commit found</h5>
       </div>
     </li>
   </ul>
+
 </div>
